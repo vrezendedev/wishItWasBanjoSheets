@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -22,7 +21,7 @@ public class Staff : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, 
         _staffIndex = staffIndex;
     }
 
-    public void OnPointerClick(PointerEventData eventData) => NotesManager.AddNote(new Notation(_staffIndex, 1, eventData.pointerCurrentRaycast.screenPosition));
+    public void OnPointerClick(PointerEventData eventData) => NotesManager.AddNote(new Notation(_staffIndex, 1));
 
     public void OnPointerEnter(PointerEventData eventData) => _image.color = highlightColor;
 
