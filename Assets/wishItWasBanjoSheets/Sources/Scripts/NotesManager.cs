@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class NotesManager : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class NotesManager : MonoBehaviour
     [Header("Required")]
     public GameObject Note;
     public GameObject Sheet;
+    public TextMeshProUGUI CurrentSlice;
+    public Button Undo;
 
     private int _currentSlice = 0;
     private Dictionary<int, List<Notation>> _orderedNotes;
@@ -24,7 +28,6 @@ public class NotesManager : MonoBehaviour
         RectTransform sheetRT = Sheet.GetComponent<RectTransform>();
         rt.sizeDelta = sheetRT.sizeDelta;
         rt.localPosition = sheetRT.localPosition;
-
         _sheetSize = rt.sizeDelta;
         _noteSize = _sheetSize.y / 12;
     }
@@ -33,16 +36,20 @@ public class NotesManager : MonoBehaviour
     {
         AddNote += HandleAddNote;
         ChangeSlice += HandleChangeSlice;
+        Undo.onClick.AddListener(delegate { HandleUndo(); });
     }
 
     void OnDisable()
     {
         AddNote -= HandleAddNote;
         ChangeSlice -= HandleChangeSlice;
+        Undo.onClick.RemoveAllListeners();
     }
 
     private void DrawNotes()
     {
+        if (!_orderedNotes.ContainsKey(_currentSlice)) return;
+
         for (int i = 0; i < _orderedNotes[_currentSlice].Count; i++)
         {
             GameObject note = Instantiate(Note, this.transform);
@@ -60,7 +67,14 @@ public class NotesManager : MonoBehaviour
             Destroy(this.transform.GetChild(i).gameObject);
     }
 
-    private void HandleChangeSlice(int value) => _currentSlice += value;
+    private void HandleChangeSlice(int value)
+    {
+        _currentSlice += value;
+        _currentSlice = Mathf.Clamp(_currentSlice, 0, _orderedNotes.Count);
+        CurrentSlice.text = (_currentSlice + 1).ToString();
+        EraseNotes();
+        DrawNotes();
+    }
 
     private void HandleAddNote(Notation notation)
     {
@@ -87,6 +101,15 @@ public class NotesManager : MonoBehaviour
                 _orderedNotes[_currentSlice].RemoveAt(_orderedNotes[_currentSlice].Count - 1);
                 EraseNotes();
                 DrawNotes();
+            }
+
+            if (_orderedNotes[_currentSlice].Count == 0)
+            {
+                if (_currentSlice > 0)
+                {
+                    _orderedNotes.Remove(_currentSlice);
+                    HandleChangeSlice(-1);
+                }
             }
         }
     }
