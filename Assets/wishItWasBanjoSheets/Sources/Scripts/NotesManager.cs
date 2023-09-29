@@ -7,6 +7,7 @@ public class NotesManager : MonoBehaviour
 
     [Header("Required")]
     public GameObject Note;
+    public GameObject Sheet;
 
     private int _currentSlice = 0;
     private Dictionary<int, List<Notation>> _orderedNotes;
@@ -19,7 +20,12 @@ public class NotesManager : MonoBehaviour
     void Awake()
     {
         _orderedNotes = new Dictionary<int, List<Notation>>();
-        _sheetSize = this.GetComponent<RectTransform>().sizeDelta;
+        RectTransform rt = this.GetComponent<RectTransform>();
+        RectTransform sheetRT = Sheet.GetComponent<RectTransform>();
+        rt.sizeDelta = sheetRT.sizeDelta;
+        rt.localPosition = sheetRT.localPosition;
+
+        _sheetSize = rt.sizeDelta;
         _noteSize = _sheetSize.y / 12;
     }
 
@@ -43,8 +49,6 @@ public class NotesManager : MonoBehaviour
             RectTransform noteRT = note.GetComponent<RectTransform>();
             noteRT.sizeDelta = new Vector2(_noteSize, _sheetSize.y);
             noteRT.localPosition = new Vector3(_noteSize * i, 1);
-
-            Debug.Log(noteRT.transform.localPosition);
             Note noteComponent = note.GetComponentInChildren<Note>();
             noteComponent.Init(null, _noteSize, new Vector2(1, _noteSize * _orderedNotes[_currentSlice][i].StaffIndex));
         }
