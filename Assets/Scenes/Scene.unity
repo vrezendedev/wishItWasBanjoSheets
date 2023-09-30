@@ -2715,6 +2715,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 463117351}
     m_Modifications:
+    - target: {fileID: 1988397548858200480, guid: 72424da03ae4b4b4094855a3c8e808e9,
+        type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 32
+      objectReference: {fileID: 0}
     - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
         type: 3}
       propertyPath: Undo
@@ -2730,35 +2735,6 @@ PrefabInstance:
       propertyPath: CurrentSlice
       value: 
       objectReference: {fileID: 1266177957}
-    - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
-        type: 3}
-      propertyPath: Notes.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
-        type: 3}
-      propertyPath: Notes.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 89c7d7cbcb2a0ee4a8b96c24a2c72572,
-        type: 3}
-    - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
-        type: 3}
-      propertyPath: Notes.Array.data[1]
-      value: 
-      objectReference: {fileID: 21300000, guid: 005f9dabda6f3f24db166c731cfb4aa9,
-        type: 3}
-    - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
-        type: 3}
-      propertyPath: Notes.Array.data[2]
-      value: 
-      objectReference: {fileID: 21300000, guid: 4c0e89258f2ecdd4f9aab59c698150ac,
-        type: 3}
-    - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
-        type: 3}
-      propertyPath: Notes.Array.data[3]
-      value: 
-      objectReference: {fileID: 21300000, guid: 40bf0592788dbeb46b4c8feb4d895429,
-        type: 3}
     - target: {fileID: 5191110315570076896, guid: 72424da03ae4b4b4094855a3c8e808e9,
         type: 3}
       propertyPath: m_Pivot.x

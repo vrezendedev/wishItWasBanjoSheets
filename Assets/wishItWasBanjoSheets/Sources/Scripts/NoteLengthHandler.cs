@@ -11,9 +11,9 @@ public class NoteLengthHandler : MonoBehaviour
     void OnEnable()
     {
         Whole.onClick.AddListener(delegate { ChangeLength(1f); });
-        Half.onClick.AddListener(delegate { ChangeLength(0.5f); });
-        Quarter.onClick.AddListener(delegate { ChangeLength(0.25f); });
-        Eighth.onClick.AddListener(delegate { ChangeLength(0.125f); });
+        Half.onClick.AddListener(delegate { ChangeLength(2f); });
+        Quarter.onClick.AddListener(delegate { ChangeLength(8f); });
+        Eighth.onClick.AddListener(delegate { ChangeLength(16f); });
     }
 
     void OnDisable()

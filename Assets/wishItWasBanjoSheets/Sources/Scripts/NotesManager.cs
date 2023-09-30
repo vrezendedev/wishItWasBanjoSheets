@@ -38,7 +38,7 @@ public class NotesManager : MonoBehaviour
         _noteSize = _sheetSize.y / 12;
 
         int spriteIndex = 0;
-        foreach (float length in new[] { 1f, 0.5f, 0.25f, 0.125f })
+        foreach (float length in new[] { 1f, 2f, 8f, 16f })
         {
             _noteLengthSprite.Add(length, Notes[spriteIndex]);
             spriteIndex++;
@@ -95,6 +95,8 @@ public class NotesManager : MonoBehaviour
 
     private void HandleAddNote(Notation notation)
     {
+        if (!ValidateNotesLength(notation.Length)) return;
+
         if (_orderedNotes.ContainsKey(_currentSlice))
         {
             _orderedNotes[_currentSlice].Add(notation);
@@ -131,6 +133,19 @@ public class NotesManager : MonoBehaviour
         }
     }
 
+    private bool ValidateNotesLength(float newNoteLength)
+    {
+        if (!_orderedNotes.ContainsKey(_currentSlice)) return true;
+
+        float sum = 4 / newNoteLength;
+
+        for (int i = 0; i < _orderedNotes[_currentSlice].Count; i++)
+        {
+            sum += 4 / _orderedNotes[_currentSlice][i].Length;
+        }
+
+        return sum <= 4 ? true : false;
+    }
 
 }
 

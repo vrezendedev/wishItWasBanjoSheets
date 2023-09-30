@@ -8,7 +8,7 @@ public class Note : MonoBehaviour
         RectTransform rt = this.GetComponent<RectTransform>();
         float scaledSize = size * 3;
         rt.sizeDelta = new Vector2(scaledSize, scaledSize);
-        rt.localPosition = position;
+        rt.localPosition = new Vector2(-20, position.y);
         Image img = this.GetComponent<Image>();
         img.sprite = image;
     }

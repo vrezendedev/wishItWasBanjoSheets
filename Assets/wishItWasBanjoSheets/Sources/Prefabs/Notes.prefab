@@ -92,6 +92,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Note: {fileID: 8912958763526421620, guid: 2f95d480caefb9943a0045b4397c1476, type: 3}
   Sheet: {fileID: 0}
+  CurrentSlice: {fileID: 0}
+  Undo: {fileID: 0}
+  Notes:
+  - {fileID: 21300000, guid: 89c7d7cbcb2a0ee4a8b96c24a2c72572, type: 3}
+  - {fileID: 21300000, guid: 005f9dabda6f3f24db166c731cfb4aa9, type: 3}
+  - {fileID: 21300000, guid: 4c0e89258f2ecdd4f9aab59c698150ac, type: 3}
+  - {fileID: 21300000, guid: 40bf0592788dbeb46b4c8feb4d895429, type: 3}
 --- !u!114 &1988397548858200480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,11 +112,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 16
-    m_Right: 16
+    m_Left: 0
+    m_Right: 32
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 7
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
