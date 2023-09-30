@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class Staff : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Customizables:")]
-    public Color highlightColor = Color.grey;
+    public Color highlightColor = new Color(0, 0, 0, 0.2f);
 
     private int _staffIndex;
     private Image _image;
@@ -21,7 +21,7 @@ public class Staff : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, 
         _staffIndex = staffIndex;
     }
 
-    public void OnPointerClick(PointerEventData eventData) => NotesManager.AddNote(new Notation(_staffIndex, 1));
+    public void OnPointerClick(PointerEventData eventData) => NotesManager.AddNote(new Notation(_staffIndex, NotesManager.NoteLength));
 
     public void OnPointerEnter(PointerEventData eventData) => _image.color = highlightColor;
 

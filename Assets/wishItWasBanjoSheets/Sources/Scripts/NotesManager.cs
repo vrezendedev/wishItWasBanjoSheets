@@ -12,24 +12,37 @@ public class NotesManager : MonoBehaviour
     public GameObject Sheet;
     public TextMeshProUGUI CurrentSlice;
     public Button Undo;
+    [Tooltip("Order matters here, please do not change it!")] public Sprite[] Notes;
 
     private int _currentSlice = 0;
     private Dictionary<int, List<Notation>> _orderedNotes;
+    private Dictionary<float, Sprite> _noteLengthSprite;
 
     public static UnityAction<Notation> AddNote;
+    public static UnityAction<float> ChangeLength;
     public static UnityAction<int> ChangeSlice;
+    public static float NoteLength = 1f;
+
     private Vector2 _sheetSize;
     private float _noteSize;
 
     void Awake()
     {
         _orderedNotes = new Dictionary<int, List<Notation>>();
+        _noteLengthSprite = new Dictionary<float, Sprite>();
         RectTransform rt = this.GetComponent<RectTransform>();
         RectTransform sheetRT = Sheet.GetComponent<RectTransform>();
         rt.sizeDelta = sheetRT.sizeDelta;
         rt.localPosition = sheetRT.localPosition;
         _sheetSize = rt.sizeDelta;
         _noteSize = _sheetSize.y / 12;
+
+        int spriteIndex = 0;
+        foreach (float length in new[] { 1f, 0.5f, 0.25f, 0.125f })
+        {
+            _noteLengthSprite.Add(length, Notes[spriteIndex]);
+            spriteIndex++;
+        }
     }
 
     void OnEnable()
@@ -37,6 +50,7 @@ public class NotesManager : MonoBehaviour
         AddNote += HandleAddNote;
         ChangeSlice += HandleChangeSlice;
         Undo.onClick.AddListener(delegate { HandleUndo(); });
+        ChangeLength += HandleChangeLength;
     }
 
     void OnDisable()
@@ -44,6 +58,7 @@ public class NotesManager : MonoBehaviour
         AddNote -= HandleAddNote;
         ChangeSlice -= HandleChangeSlice;
         Undo.onClick.RemoveAllListeners();
+        ChangeLength -= HandleChangeLength;
     }
 
     private void DrawNotes()
@@ -57,7 +72,7 @@ public class NotesManager : MonoBehaviour
             noteRT.sizeDelta = new Vector2(_noteSize, _sheetSize.y);
             noteRT.localPosition = new Vector3(_noteSize * i, 1);
             Note noteComponent = note.GetComponentInChildren<Note>();
-            noteComponent.Init(null, _noteSize, new Vector2(1, _noteSize * _orderedNotes[_currentSlice][i].StaffIndex));
+            noteComponent.Init(_noteLengthSprite[_orderedNotes[_currentSlice][i].Length], _noteSize, new Vector2(1, _noteSize * _orderedNotes[_currentSlice][i].StaffIndex));
         }
     }
 
@@ -75,6 +90,8 @@ public class NotesManager : MonoBehaviour
         EraseNotes();
         DrawNotes();
     }
+
+    private void HandleChangeLength(float length) => NotesManager.NoteLength = length;
 
     private void HandleAddNote(Notation notation)
     {
@@ -113,6 +130,7 @@ public class NotesManager : MonoBehaviour
             }
         }
     }
+
 
 }
 

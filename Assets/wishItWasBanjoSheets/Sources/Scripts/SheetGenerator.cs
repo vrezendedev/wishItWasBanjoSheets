@@ -23,7 +23,7 @@ public class SheetGenerator : MonoBehaviour
 
         for (int i = 10; i > -1; i--)
         {
-            GenerateStaff(i, i % 2 == 0 ? Color.white : Color.black);
+            GenerateStaff(i, i % 2 == 0 ? Color.white : Color.gray);
         }
 
         GenerateStaff(-1, Color.white);
