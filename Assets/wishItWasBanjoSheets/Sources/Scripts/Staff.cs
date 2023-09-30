@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static WishItWasBanjoSheetsEnums;
 
 public class Staff : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
+
     [Header("Customizables:")]
-    public Color highlightColor = new Color(0, 0, 0, 0.2f);
+    [SerializeField] private Color highlightColor = new Color(0, 0, 0, 0.2f);
 
     private int _staffIndex;
     private Image _image;
@@ -23,7 +25,18 @@ public class Staff : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, 
 
     public void OnPointerClick(PointerEventData eventData) => NotesManager.AddNote(new Notation(_staffIndex, NotesManager.NoteLength));
 
-    public void OnPointerEnter(PointerEventData eventData) => _image.color = highlightColor;
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        _image.color = highlightColor;
+        NotesManager.ChangeCurrentNote(
+            NotesManager._currentClef == Clef.G ?
+            GClefNoteByStaffIndex[_staffIndex] : FClefNoteByStaffIndex[_staffIndex]
+        );
+    }
 
-    public void OnPointerExit(PointerEventData eventData) => _image.color = _color;
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _image.color = _color;
+        NotesManager.ChangeCurrentNote("");
+    }
 }

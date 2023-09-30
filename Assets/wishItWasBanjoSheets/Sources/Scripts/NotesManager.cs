@@ -10,15 +10,16 @@ public class NotesManager : MonoBehaviour
 {
 
     [Header("Required")]
-    [SerializeField] private GameObject Note;
-    [SerializeField] private GameObject Sheet;
-    [SerializeField] private TextMeshProUGUI CurrentSlice;
-    [SerializeField] private Button Undo;
-    [SerializeField] private Image ChangeClefBtn;
-    [Tooltip("Order matters here, please do not change it!"), SerializeField] private Sprite[] Notes;
-    [SerializeField] private Image _clefImage;
-    [SerializeField] private Sprite ClefG;
-    [SerializeField] private Sprite ClefF;
+    [SerializeField] private GameObject goNote;
+    [SerializeField] private GameObject goSheet;
+    [SerializeField] private TextMeshProUGUI currentSlice;
+    [SerializeField] private Button bUndo;
+    [SerializeField] private Image changeClefBtn;
+    [Tooltip("Order matters here, please do not change it!"), SerializeField] private Sprite[] sNotes;
+    [SerializeField] private Image clefImage;
+    [SerializeField] private Sprite clefG;
+    [SerializeField] private Sprite clefF;
+    [SerializeField] private TextMeshProUGUI currentNote;
 
     private int _currentSlice = 0;
     private Dictionary<int, List<Notation>> _orderedNotes;
@@ -28,9 +29,10 @@ public class NotesManager : MonoBehaviour
     public static UnityAction<float> ChangeLength;
     public static UnityAction<int> ChangeSlice;
     public static UnityAction ChangeClef;
+    public static UnityAction<string> ChangeCurrentNote;
 
     public static float NoteLength = 1f;
-    private static Clef _currentClef = Clef.G;
+    public static Clef _currentClef = Clef.G;
 
     private Vector2 _sheetSize;
     private float _noteSize;
@@ -40,7 +42,7 @@ public class NotesManager : MonoBehaviour
         _orderedNotes = new Dictionary<int, List<Notation>>();
         _noteLengthSprite = new Dictionary<float, Sprite>();
         RectTransform rt = this.GetComponent<RectTransform>();
-        RectTransform sheetRT = Sheet.GetComponent<RectTransform>();
+        RectTransform sheetRT = goSheet.GetComponent<RectTransform>();
         rt.sizeDelta = sheetRT.sizeDelta;
         rt.localPosition = sheetRT.localPosition;
         _sheetSize = rt.sizeDelta;
@@ -49,7 +51,7 @@ public class NotesManager : MonoBehaviour
         int spriteIndex = 0;
         foreach (float length in new[] { 1f, 2f, 8f, 16f })
         {
-            _noteLengthSprite.Add(length, Notes[spriteIndex]);
+            _noteLengthSprite.Add(length, sNotes[spriteIndex]);
             spriteIndex++;
         }
     }
@@ -58,18 +60,20 @@ public class NotesManager : MonoBehaviour
     {
         AddNote += HandleAddNote;
         ChangeSlice += HandleChangeSlice;
-        Undo.onClick.AddListener(delegate { HandleUndo(); });
+        bUndo.onClick.AddListener(delegate { HandleUndo(); });
         ChangeLength += HandleChangeLength;
         ChangeClef += HandleChageClef;
+        ChangeCurrentNote += HandleChangeCurrentNote;
     }
 
     void OnDisable()
     {
         AddNote -= HandleAddNote;
         ChangeSlice -= HandleChangeSlice;
-        Undo.onClick.RemoveAllListeners();
+        bUndo.onClick.RemoveAllListeners();
         ChangeLength -= HandleChangeLength;
         ChangeClef -= HandleChageClef;
+        ChangeCurrentNote -= HandleChangeCurrentNote;
     }
 
     private void DrawNotes()
@@ -78,7 +82,7 @@ public class NotesManager : MonoBehaviour
 
         for (int i = 0; i < _orderedNotes[_currentSlice].Count; i++)
         {
-            GameObject note = Instantiate(Note, this.transform);
+            GameObject note = Instantiate(goNote, this.transform);
             RectTransform noteRT = note.GetComponent<RectTransform>();
             noteRT.sizeDelta = new Vector2(_noteSize, _sheetSize.y);
             noteRT.localPosition = new Vector3(_noteSize * i, 1);
@@ -97,7 +101,7 @@ public class NotesManager : MonoBehaviour
     {
         _currentSlice += value;
         _currentSlice = Mathf.Clamp(_currentSlice, 0, _orderedNotes.Count);
-        CurrentSlice.text = (_currentSlice + 1).ToString();
+        currentSlice.text = (_currentSlice + 1).ToString();
         EraseNotes();
         DrawNotes();
     }
@@ -107,8 +111,13 @@ public class NotesManager : MonoBehaviour
     private void HandleChageClef()
     {
         _currentClef = _currentClef == Clef.G ? Clef.F : Clef.G;
-        _clefImage.sprite = _currentClef == Clef.G ? ClefG : ClefF;
-        ChangeClefBtn.sprite = _currentClef == Clef.G ? ClefF : ClefG;
+        clefImage.sprite = _currentClef == Clef.G ? clefG : clefF;
+        changeClefBtn.sprite = _currentClef == Clef.G ? clefF : clefG;
+    }
+
+    private void HandleChangeCurrentNote(string note)
+    {
+        currentNote.text = note;
     }
 
     private void HandleAddNote(Notation notation)
