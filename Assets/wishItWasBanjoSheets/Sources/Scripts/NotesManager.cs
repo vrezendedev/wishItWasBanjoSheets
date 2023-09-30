@@ -1,18 +1,24 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 using UnityEngine.UI;
+using static WishItWasBanjoSheetsEnums;
+using System;
 
 public class NotesManager : MonoBehaviour
 {
 
     [Header("Required")]
-    public GameObject Note;
-    public GameObject Sheet;
-    public TextMeshProUGUI CurrentSlice;
-    public Button Undo;
-    [Tooltip("Order matters here, please do not change it!")] public Sprite[] Notes;
+    [SerializeField] private GameObject Note;
+    [SerializeField] private GameObject Sheet;
+    [SerializeField] private TextMeshProUGUI CurrentSlice;
+    [SerializeField] private Button Undo;
+    [SerializeField] private Image ChangeClefBtn;
+    [Tooltip("Order matters here, please do not change it!"), SerializeField] private Sprite[] Notes;
+    [SerializeField] private Image _clefImage;
+    [SerializeField] private Sprite ClefG;
+    [SerializeField] private Sprite ClefF;
 
     private int _currentSlice = 0;
     private Dictionary<int, List<Notation>> _orderedNotes;
@@ -21,7 +27,10 @@ public class NotesManager : MonoBehaviour
     public static UnityAction<Notation> AddNote;
     public static UnityAction<float> ChangeLength;
     public static UnityAction<int> ChangeSlice;
+    public static UnityAction ChangeClef;
+
     public static float NoteLength = 1f;
+    private static Clef _currentClef = Clef.G;
 
     private Vector2 _sheetSize;
     private float _noteSize;
@@ -51,6 +60,7 @@ public class NotesManager : MonoBehaviour
         ChangeSlice += HandleChangeSlice;
         Undo.onClick.AddListener(delegate { HandleUndo(); });
         ChangeLength += HandleChangeLength;
+        ChangeClef += HandleChageClef;
     }
 
     void OnDisable()
@@ -59,6 +69,7 @@ public class NotesManager : MonoBehaviour
         ChangeSlice -= HandleChangeSlice;
         Undo.onClick.RemoveAllListeners();
         ChangeLength -= HandleChangeLength;
+        ChangeClef -= HandleChageClef;
     }
 
     private void DrawNotes()
@@ -92,6 +103,13 @@ public class NotesManager : MonoBehaviour
     }
 
     private void HandleChangeLength(float length) => NotesManager.NoteLength = length;
+
+    private void HandleChageClef()
+    {
+        _currentClef = _currentClef == Clef.G ? Clef.F : Clef.G;
+        _clefImage.sprite = _currentClef == Clef.G ? ClefG : ClefF;
+        ChangeClefBtn.sprite = _currentClef == Clef.G ? ClefF : ClefG;
+    }
 
     private void HandleAddNote(Notation notation)
     {

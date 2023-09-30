@@ -949,6 +949,7 @@ GameObject:
   - component: {fileID: 352869051}
   - component: {fileID: 352869053}
   - component: {fileID: 352869052}
+  - component: {fileID: 352869054}
   m_Layer: 5
   m_Name: ClefAndNote
   m_TagString: Untagged
@@ -1013,6 +1014,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352869050}
   m_CullTransparentMesh: 1
+--- !u!114 &352869054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352869050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a008a19a2c07dd540a212fba9dea3277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clef: {fileID: 1562630834}
 --- !u!1 &364333669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6238436999480498138, guid: d2c257749cf260240bde2f5628527564,
@@ -2715,11 +2729,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 463117351}
     m_Modifications:
-    - target: {fileID: 1988397548858200480, guid: 72424da03ae4b4b4094855a3c8e808e9,
-        type: 3}
-      propertyPath: m_Padding.m_Right
-      value: 32
-      objectReference: {fileID: 0}
     - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
         type: 3}
       propertyPath: Undo
@@ -2732,9 +2741,19 @@ PrefabInstance:
       objectReference: {fileID: 364333669}
     - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
         type: 3}
+      propertyPath: _clefImage
+      value: 
+      objectReference: {fileID: 351108736}
+    - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
+        type: 3}
       propertyPath: CurrentSlice
       value: 
       objectReference: {fileID: 1266177957}
+    - target: {fileID: 4796838347689111538, guid: 72424da03ae4b4b4094855a3c8e808e9,
+        type: 3}
+      propertyPath: ChangeClefBtn
+      value: 
+      objectReference: {fileID: 1562630835}
     - target: {fileID: 5191110315570076896, guid: 72424da03ae4b4b4094855a3c8e808e9,
         type: 3}
       propertyPath: m_Pivot.x

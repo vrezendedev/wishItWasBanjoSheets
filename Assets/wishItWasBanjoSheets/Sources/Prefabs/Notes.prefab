@@ -99,6 +99,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 005f9dabda6f3f24db166c731cfb4aa9, type: 3}
   - {fileID: 21300000, guid: 4c0e89258f2ecdd4f9aab59c698150ac, type: 3}
   - {fileID: 21300000, guid: 40bf0592788dbeb46b4c8feb4d895429, type: 3}
+  _clefImage: {fileID: 0}
+  ClefG: {fileID: 21300000, guid: 894fcc5e75e56584cadbcfad69dae578, type: 3}
+  ClefF: {fileID: 21300000, guid: f0c08f9022bc47842840043883ebfed6, type: 3}
 --- !u!114 &1988397548858200480
 MonoBehaviour:
   m_ObjectHideFlags: 0
